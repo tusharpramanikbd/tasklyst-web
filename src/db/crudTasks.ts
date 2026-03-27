@@ -11,6 +11,7 @@ export const createTaskDB = async (title: string): Promise<Task> => {
     createdAt: today,
     updatedAt: today,
     isDone: false,
+    sortId: Date.now(),
   };
   await db.tasks.add(task);
   return task;
@@ -32,7 +33,9 @@ export const deleteTaskDB = async (id: string): Promise<void> => {
 };
 
 export const listTasksDB = async (date: string): Promise<Task[]> => {
-  return await db.tasks.where("createdAt").equals(date).toArray();
+  return (
+    await db.tasks.where("createdAt").equals(date).sortBy("sortId")
+  ).reverse();
 };
 
 export const moveTaskToNextDayDB = async (id: string, nextDate: string) => {
