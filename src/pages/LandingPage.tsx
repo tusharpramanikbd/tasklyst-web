@@ -10,7 +10,7 @@ const LandingPage = () => {
   const { isDesktop } = useBreakpoint();
 
   return (
-    <div className="min-h-dvh bg-linear-to-br from-teal-500 via-blue-500 to-purple-600 text-white p-8 lg:p-12">
+    <div className="min-h-dvh bg-linear-to-br from-[#667eea] to-[#764ba2] text-white p-8 lg:p-12">
       <div className="max-w-4xl mx-auto mb-16">
         <Hero />
         <Features />

@@ -7,7 +7,7 @@ const MobileOnlyGate = () => {
   if (!isDesktop) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-linear-to-br from-teal-500/95 to-blue-600/95 backdrop-blur-md px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-linear-to-br from-[#667eea] to-[#764ba2] backdrop-blur-md px-4">
       <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-2xl max-w-md w-full text-center border border-white/50">
         {/* Phone mockup */}
         <div className="bg-linear-to-b from-gray-900 to-gray-800 rounded-3xl p-6 pb-12 relative mx-auto w-48 h-96 mb-12 shadow-2xl">
