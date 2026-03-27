@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useDBContext } from "../../contexts/DBContext";
 import Checkbox from "../Primitives/Checkbox";
 import Pressable from "../Primitives/Pressable";
 import Typography from "../Primitives/Typography";
 import View from "../Primitives/View";
+import TaskOptionsBottomSheet from "../BottomSheet/TaskOptionsBottomSheet";
 
 interface Props {
   id: string;
@@ -13,7 +15,9 @@ interface Props {
 }
 
 const TaskItem = ({ id, title, isDone, isLast, isDisabled }: Props) => {
-  const { updateTask, deleteTask } = useDBContext();
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+
+  const { updateTask } = useDBContext();
 
   const handleToggle = () => {
     if (isDisabled) return;
@@ -45,7 +49,7 @@ const TaskItem = ({ id, title, isDone, isLast, isDisabled }: Props) => {
         </View>
 
         <Pressable
-          onClick={() => deleteTask(id)}
+          onClick={() => setIsOptionsOpen(true)}
           disabled={isDisabled}
           className="text-gray-400"
         >
@@ -54,6 +58,13 @@ const TaskItem = ({ id, title, isDone, isLast, isDisabled }: Props) => {
       </View>
 
       {!isLast && <div className="h-px bg-gray-200 w-full" />}
+
+      <TaskOptionsBottomSheet
+        isOpen={isOptionsOpen}
+        onClose={() => setIsOptionsOpen(false)}
+        taskId={id}
+        taskName={title}
+      />
     </View>
   );
 };
