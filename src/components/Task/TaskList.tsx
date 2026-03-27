@@ -17,7 +17,7 @@ const TaskList = () => {
 
   return (
     <ScrollView className="flex-1">
-      <View className="flex flex-col gap-4">
+      <View className="flex flex-col gap-5">
         {taskLists.map((task, index) => (
           <TaskItem
             key={task.id}
