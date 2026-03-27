@@ -5,16 +5,22 @@ import AddTaskButton from "../components/Task/AddTaskButton";
 import TaskList from "../components/Task/TaskList";
 import { DBProvider } from "../contexts/DBContext";
 import Header from "../components/Primitives/Header";
+import { useDateContext } from "../contexts/DateContext";
 
 const HomePage = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const { isPastDates } = useDateContext();
+
   return (
     <DBProvider>
       <ViewWrapper className="p-6">
         <Header />
         <TaskList />
 
-        <AddTaskButton onClick={() => setIsBottomSheetOpen(true)} />
+        <AddTaskButton
+          onClick={() => setIsBottomSheetOpen(true)}
+          isDisabled={isPastDates}
+        />
 
         <AddTaskBottomSheet
           isOpen={isBottomSheetOpen}

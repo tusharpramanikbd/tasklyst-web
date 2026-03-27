@@ -13,8 +13,13 @@ const useDBTaskManager = (date: string) => {
   const [taskLists, setTaskLists] = useState<Task[]>([]);
 
   const loadTasks = async () => {
-    const db = await listTasksDB(date);
-    setTaskLists(db);
+    const tasks = await listTasksDB(date);
+
+    const sortedTasks = tasks.sort(
+      (a, b) => Number(a.isDone) - Number(b.isDone),
+    );
+
+    setTaskLists(sortedTasks);
   };
 
   const addTask = async (title: string) => {

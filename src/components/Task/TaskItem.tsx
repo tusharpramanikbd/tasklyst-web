@@ -5,19 +5,22 @@ import Pressable from "../Primitives/Pressable";
 import Typography from "../Primitives/Typography";
 import View from "../Primitives/View";
 import TaskOptionsBottomSheet from "../BottomSheet/TaskOptionsBottomSheet";
+import { useDateContext } from "../../contexts/DateContext";
 
 interface Props {
   id: string;
   title: string;
   isDone: boolean;
   isLast?: boolean;
-  isDisabled?: boolean;
 }
 
-const TaskItem = ({ id, title, isDone, isLast, isDisabled }: Props) => {
+const TaskItem = ({ id, title, isDone, isLast }: Props) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const { updateTaskStatus } = useDBContext();
+  const { isPastDates } = useDateContext();
+
+  const isDisabled = isPastDates && isDone;
 
   const handleToggle = () => {
     if (isDisabled) return;
