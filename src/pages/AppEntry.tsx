@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import usePWAEnvironment from "../hooks/usePWAEnvironment";
 import SplashPage from "./SplashPage";
+import AppRoot from "../app/AppRoot";
+import HomePage from "./HomePage";
 
 let hasShownSplash = false;
 
@@ -24,7 +26,11 @@ const AppEntry = () => {
     return <SplashPage />;
   }
 
-  return <div>App Entry (Mobile Only)</div>;
+  return (
+    <AppRoot>
+      <HomePage />
+    </AppRoot>
+  );
 };
 
 export default AppEntry;
