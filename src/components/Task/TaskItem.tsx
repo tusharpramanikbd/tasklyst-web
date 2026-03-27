@@ -6,6 +6,7 @@ import Typography from "../Primitives/Typography";
 import View from "../Primitives/View";
 import TaskOptionsBottomSheet from "../BottomSheet/TaskOptionsBottomSheet";
 import { useDateContext } from "../../contexts/DateContext";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   id: string;
@@ -56,7 +57,7 @@ const TaskItem = ({ id, title, isDone, isLast }: Props) => {
           disabled={isDisabled}
           className="text-gray-400"
         >
-          ⋮
+          <EllipsisVerticalIcon className="w-6 h-6" />
         </Pressable>
       </View>
 

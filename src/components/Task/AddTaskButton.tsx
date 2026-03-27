@@ -10,7 +10,7 @@ const AddTaskButton = ({ onClick, isDisabled }: Props) => {
     <Pressable
       onClick={onClick}
       disabled={isDisabled}
-      className={`fixed bottom-6 right-6 bg-black text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl ${isDisabled ? "opacity-50" : ""} `}
+      className={`fixed bottom-6 right-6 bg-black text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl ${isDisabled ? "opacity-50" : ""} `}
     >
       +
     </Pressable>

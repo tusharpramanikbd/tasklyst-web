@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import BaseBottomSheet from "./BaseBottomSheet";
 import View from "../Primitives/View";
 import Pressable from "../Primitives/Pressable";
+import Typography from "../Primitives/Typography";
 
 interface Props {
   isOpen: boolean;
@@ -20,6 +21,7 @@ const EditBottomSheet = ({ isOpen, onClose, onDone, taskName }: Props) => {
   return (
     <BaseBottomSheet isOpen={isOpen} onClose={onClose}>
       <View className="flex flex-col gap-4">
+        <Typography type="large">Edit Task</Typography>
         <input
           value={value}
           onChange={(e) => setValue(e.target.value)}

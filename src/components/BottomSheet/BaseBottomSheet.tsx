@@ -17,7 +17,9 @@ const BaseBottomSheet = ({ isOpen, onClose, children }: TBaseBottomSheet) => {
     >
       <Sheet.Container>
         <Sheet.Header />
-        <Sheet.Content>{children}</Sheet.Content>
+        <Sheet.Content>
+          <div className="px-6 pb-6">{children}</div>
+        </Sheet.Content>
       </Sheet.Container>
       <Sheet.Backdrop onClick={onClose} />
     </Sheet>

@@ -11,7 +11,7 @@ const Checkbox = ({ checked, onChange, disabled }: Props) => {
       checked={checked}
       onChange={onChange}
       disabled={disabled}
-      className="w-5 h-5 cursor-pointer"
+      className="w-5 h-5 cursor-pointer accent-black"
     />
   );
 };

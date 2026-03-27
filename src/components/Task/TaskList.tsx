@@ -10,13 +10,13 @@ const TaskList = () => {
   if (!taskLists || taskLists.length === 0) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Typography>No tasks yet</Typography>
+        <Typography className="text-center mt-24">No tasks yet</Typography>
       </View>
     );
   }
 
   return (
-    <ScrollView className="flex-1">
+    <ScrollView className="flex-1 mt-6">
       <View className="flex flex-col gap-5">
         {taskLists.map((task, index) => (
           <TaskItem
