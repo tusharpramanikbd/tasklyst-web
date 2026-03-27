@@ -5,8 +5,7 @@ type Task = {
   title: string;
   isDone: boolean;
   sortId: number;
-  createdAt: string;
-  updatedAt: string;
+  taskDate: string;
 };
 
 const db = new Dexie("Tasklyst") as Dexie & {
@@ -15,7 +14,7 @@ const db = new Dexie("Tasklyst") as Dexie & {
 
 // Schema declaration:
 db.version(1).stores({
-  tasks: "id, title, isDone, sortId, createdAt, updatedAt",
+  tasks: "id, title, isDone, sortId, taskDate",
 });
 
 export type { Task };

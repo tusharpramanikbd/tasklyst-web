@@ -18,7 +18,7 @@ const useDBTaskManager = (date: string) => {
   };
 
   const addTask = async (title: string) => {
-    await createTaskDB(title);
+    await createTaskDB(title, date);
     loadTasks();
   };
 

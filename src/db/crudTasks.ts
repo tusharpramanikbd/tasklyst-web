@@ -1,17 +1,16 @@
-import { format } from "date-fns";
 import { db, type Task } from "./tasklystDB";
 import { v4 as uuidv4 } from "uuid";
 
-const today = format(Date.now(), "dd-MM-yyyy");
-
-export const createTaskDB = async (title: string): Promise<Task> => {
+export const createTaskDB = async (
+  title: string,
+  date: string,
+): Promise<Task> => {
   const task: Task = {
     id: uuidv4(),
     title,
-    createdAt: today,
-    updatedAt: today,
     isDone: false,
     sortId: Date.now(),
+    taskDate: date,
   };
   await db.tasks.add(task);
   return task;
@@ -21,11 +20,11 @@ export const renameTaskDB = async (
   id: string,
   title: string,
 ): Promise<void> => {
-  await db.tasks.update(id, { title, updatedAt: today });
+  await db.tasks.update(id, { title });
 };
 
 export const toggleTaskDoneDB = async (id: string, isDone: boolean) => {
-  await db.tasks.update(id, { isDone, updatedAt: today });
+  await db.tasks.update(id, { isDone });
 };
 
 export const deleteTaskDB = async (id: string): Promise<void> => {
@@ -34,7 +33,7 @@ export const deleteTaskDB = async (id: string): Promise<void> => {
 
 export const listTasksDB = async (date: string): Promise<Task[]> => {
   return (
-    await db.tasks.where("createdAt").equals(date).sortBy("sortId")
+    await db.tasks.where("taskDate").equals(date).sortBy("sortId")
   ).reverse();
 };
 
@@ -46,8 +45,7 @@ export const moveTaskToNextDayDB = async (id: string, nextDate: string) => {
   const newTask: Task = {
     ...task,
     id: uuidv4(),
-    createdAt: nextDate,
-    updatedAt: nextDate,
+    taskDate: nextDate,
   };
 
   // Add the new task to the database
