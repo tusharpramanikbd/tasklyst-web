@@ -1,12 +1,14 @@
 import { createContext, useContext, type ReactNode } from "react";
 import useDBTaskManager from "../hooks/useDBTaskManager";
+import { useDateContext } from "./DateContext";
 
 const DBContext = createContext<ReturnType<typeof useDBTaskManager> | null>(
   null,
 );
 
 export const DBProvider = ({ children }: { children: ReactNode }) => {
-  const taskManager = useDBTaskManager();
+  const { formattedDate } = useDateContext();
+  const taskManager = useDBTaskManager(formattedDate);
 
   return (
     <DBContext.Provider value={taskManager}>{children}</DBContext.Provider>

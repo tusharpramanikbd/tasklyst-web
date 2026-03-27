@@ -1,84 +1,65 @@
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useState } from "react";
+import type { Task } from "../db/tasklystDB";
+import {
+  createTaskDB,
+  deleteTaskDB,
+  listTasksDB,
+  moveTaskToNextDayDB,
+  renameTaskDB,
+  toggleTaskDoneDB,
+} from "../db/crudTasks";
 
-export interface ITask {
-  id: string;
-  title: string;
-  isDone: boolean;
-  createdAt: number;
-  updatedAt: number;
-}
+const useDBTaskManager = (date: string) => {
+  const [taskLists, setTaskLists] = useState<Task[]>([]);
 
-const STORAGE_KEY = "tasklyst_tasks";
-
-const getStoredTasks = (): ITask[] => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  return data ? JSON.parse(data) : [];
-};
-
-const setStoredTasks = (tasks: ITask[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-};
-
-const useDBTaskManager = () => {
-  const [taskLists, setTaskLists] = useState<ITask[]>([]);
-
-  const setTaskListsEvent = useEffectEvent(() => {
-    setTaskLists(getStoredTasks());
-  });
-
-  useEffect(() => {
-    setTaskListsEvent();
-  }, []);
+  const loadTasks = async () => {
+    const db = await listTasksDB(date);
+    setTaskLists(db);
+  };
 
   const addTask = async (title: string) => {
-    const newTask: ITask = {
-      id: crypto.randomUUID(),
-      title,
-      isDone: false,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    };
-
-    const updated = [newTask, ...getStoredTasks()];
-    setStoredTasks(updated);
-    setTaskLists(updated);
+    await createTaskDB(title);
+    loadTasks();
   };
 
   const deleteTask = async (taskId: string) => {
-    const updated = getStoredTasks().filter((t) => t.id !== taskId);
-    setStoredTasks(updated);
-    setTaskLists(updated);
+    await deleteTaskDB(taskId);
+    loadTasks();
   };
 
-  const updateTask = async ({
+  const renameTask = async (taskId: string, taskName: string) => {
+    await renameTaskDB(taskId, taskName);
+    loadTasks();
+  };
+
+  const updateTaskStatus = async ({
     taskId,
-    taskName,
     isDone,
   }: {
     taskId: string;
-    taskName?: string;
-    isDone?: boolean;
+    isDone: boolean;
   }) => {
-    const updated = getStoredTasks().map((task) =>
-      task.id === taskId
-        ? {
-            ...task,
-            title: taskName ?? task.title,
-            isDone: isDone ?? task.isDone,
-            updatedAt: Date.now(),
-          }
-        : task,
-    );
-
-    setStoredTasks(updated);
-    setTaskLists(updated);
+    await toggleTaskDoneDB(taskId, isDone);
+    loadTasks();
   };
+
+  const moveTaskToNextDay = async (id: string, nextDate: string) => {
+    await moveTaskToNextDayDB(id, nextDate);
+    loadTasks();
+  };
+
+  useEffect(() => {
+    loadTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date]);
 
   return {
     taskLists,
     addTask,
+    renameTask,
+    updateTaskStatus,
     deleteTask,
-    updateTask,
+    moveTaskToNextDay,
   };
 };
 

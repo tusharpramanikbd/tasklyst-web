@@ -17,12 +17,12 @@ interface Props {
 const TaskItem = ({ id, title, isDone, isLast, isDisabled }: Props) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
-  const { updateTask } = useDBContext();
+  const { updateTaskStatus } = useDBContext();
 
   const handleToggle = () => {
     if (isDisabled) return;
 
-    updateTask({
+    updateTaskStatus({
       taskId: id,
       isDone: !isDone,
     });

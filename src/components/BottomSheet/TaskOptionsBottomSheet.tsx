@@ -6,6 +6,7 @@ import Typography from "../Primitives/Typography";
 import Pressable from "../Primitives/Pressable";
 import ConfirmBottomSheet from "./ConfirmBottomSheet";
 import EditBottomSheet from "./EditBottomSheet";
+import { useDateContext } from "../../contexts/DateContext";
 
 interface Props {
   isOpen: boolean;
@@ -20,7 +21,8 @@ const TaskOptionsBottomSheet = ({
   taskId,
   taskName,
 }: Props) => {
-  const { deleteTask, updateTask } = useDBContext();
+  const { deleteTask, renameTask, moveTaskToNextDay } = useDBContext();
+  const { nextDate } = useDateContext();
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -32,10 +34,7 @@ const TaskOptionsBottomSheet = ({
   };
 
   const handleEdit = async (newName: string) => {
-    await updateTask({
-      taskId,
-      taskName: newName,
-    });
+    await renameTask(taskId, newName);
     setShowEdit(false);
     onClose();
   };
@@ -49,6 +48,15 @@ const TaskOptionsBottomSheet = ({
           <Pressable onClick={() => setShowEdit(true)}>Edit</Pressable>
 
           <Pressable onClick={() => setShowConfirm(true)}>Delete</Pressable>
+
+          <Pressable
+            onClick={() => {
+              moveTaskToNextDay(taskId, nextDate);
+              onClose();
+            }}
+          >
+            Move to next day
+          </Pressable>
         </View>
       </BaseBottomSheet>
 
