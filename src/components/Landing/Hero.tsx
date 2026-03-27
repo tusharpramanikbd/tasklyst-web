@@ -5,7 +5,7 @@ const Hero = () => {
         TASKLYST
       </h1>
       <p className="text-2xl lg:text-3xl text-teal-100 max-w-2xl mx-auto leading-relaxed">
-        Offline-first vocabulary notebook with daily practice
+        Your offline task manager to stay productive anywhere
       </p>
     </div>
   );
